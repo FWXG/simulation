@@ -10,8 +10,8 @@ add_executable(simulation
     headers/organisms/cell.h
     src/organisms/food.cpp
     headers/organisms/food.h
-    src/organisms/live.cpp
-    headers/organisms/live.h
+    src/organisms/baseLive.cpp
+    headers/organisms/baseLive.h
     )
 
 add_subdirectory(external/sfml)

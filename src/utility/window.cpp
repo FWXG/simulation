@@ -6,14 +6,6 @@ void Window::createWindow()
 {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Simulation");
 
-    sf::CircleShape circle;
-    sf::Color circle_color(45,89,56,255);
-    sf::Vector2f circle_position(0.0, 0.0);
-
-    circle.setRadius(10.0f);
-    circle.setFillColor(sf::Color::Green);
-    circle.setPosition(circle_position);
-
     while (window.isOpen())
     {
 
@@ -31,7 +23,7 @@ void Window::createWindow()
 
             window.clear(window_color);
 
-            window.draw(circle);
+            //window.draw(circle);
 
             window.display();
 
