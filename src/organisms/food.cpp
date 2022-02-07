@@ -4,6 +4,12 @@
 #include <random>
 #include <time.h>
 
+Food::CellFood::CellFood()
+{
+
+}
+
+
 Food::CellFood::CellFood(sf::Vector2f foodPosition)
 {
     (this->form).setRadius(5.0f);
@@ -14,6 +20,11 @@ Food::CellFood::CellFood(sf::Vector2f foodPosition)
 
 }
 
+void Food::CellFood::setPosition(sf::Vector2f foodPosition)
+{
+    (this->form).setPosition(foodPosition);
+    this->position = foodPosition;
+}
 
 sf::CircleShape Food::CellFood::getShape()
 {
