@@ -7,7 +7,7 @@ namespace Food
 	{
 	public:
 
-		CellFood(sf::Vector2f food_position, sf::Color food_color, sf::CircleShape food_shape);
+		CellFood(sf::Vector2f foodPosition);
 		sf::CircleShape getShape();
 
 	};

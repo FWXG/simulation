@@ -2,6 +2,21 @@
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
 #include "../../headers/organisms/food.h"
+#include <random>
+
+// Generator of random coordinates of food
+sf::Vector2f randomFoodPosition()
+{
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_real_distribution<> dist(100.0f,700.0f);
+
+    sf::Vector2f foodPosition(dist(rng), dist(rng));
+
+    return foodPosition;
+}
+
+
 
 void Window::createWindow()
 {
@@ -9,13 +24,17 @@ void Window::createWindow()
 
     sf::Color window_color(0, 0, 0, 255);
 
-    sf::Vector2f foodPosition(15.0f,45.0f);
-    sf::CircleShape circle;
 
-    Food::CellFood oneFood(foodPosition, sf::Color::Yellow, circle);
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_real_distribution<> dist(100.0f,700.0f);
 
-    sf::CircleShape tmp(10.0f);
-    tmp.setFillColor(sf::Color::Blue);
+    sf::Vector2f firstVector(dist(rng), dist(rng));
+    sf::Vector2f secondVector(dist(rng), dist(rng));
+
+    Food::CellFood oneFood(firstVector);
+    Food::CellFood secondFood(secondVector);
+
 
     while (window.isOpen())
     {
@@ -33,6 +52,7 @@ void Window::createWindow()
             window.clear(window_color);
 
             window.draw(oneFood.getShape());
+            window.draw(secondFood.getShape());
 
             window.display();
 
