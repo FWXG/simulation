@@ -8,11 +8,11 @@ namespace Base
 	{
 	protected:
 
-		sf::Vector2f m_position;
-		sf::Color m_color;
-		sf::CircleShape m_form; //@ why i can't use sf::Shape as Parent and reuse it in daughter class?
+		sf::Vector2f position;
+		sf::Color color;
+		sf::CircleShape form;
 
-		virtual void setPosition(BaseLive *pObject) = 0;
+		//virtual void setPosition(BaseLive *pObject) = 0;
 
 	};
 }
