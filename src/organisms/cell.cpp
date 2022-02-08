@@ -1,6 +1,7 @@
 #include "../../headers/organisms/cell.h"
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include <iostream>
 #include <random>
 #include <time.h>
 
@@ -8,7 +9,6 @@ Cell::Cell()
 {
 
 }
-
 
 Cell::Cell(sf::Vector2f cellPosition)
 {
@@ -30,3 +30,9 @@ sf::CircleShape Cell::getShape()
 {
     return this->form;
 }
+
+void Cell::getPosition()
+{
+    std::cout << "x: " << this->position.x << "y: " << this->position.y << std::endl;
+}
+
