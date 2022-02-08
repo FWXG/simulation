@@ -51,18 +51,23 @@ void Application::createWindow()
     //Make 2 vectors of of CellFood class, it is position of food
     sf::Vector2f firstVector(dist(rng), dist(rng));
 
+    sf::CircleShape circle;
+    circle.setFillColor(sf::Color::Red);
+    circle.setPosition(firstVector);
+    circle.setRadius(50.0f);
+
     //Make 2 objects of CellFood class
     Cell oneCell(firstVector);
 
     //Make dynamic array
-    /*Cell *arrayOfCell = new Cell[5];
+    Cell *arrayOfCell = new Cell[5];
     for(int i = 0; i < 5; ++i)
     {
         arrayOfCell[i] = oneCell;
         firstVector.x -= 50.0f;
         firstVector.y -= 10.0f;
         oneCell.setPosition(firstVector);
-    }*/
+    }
 
 
     while (window.isOpen())
@@ -72,13 +77,15 @@ void Application::createWindow()
 
             window.clear(window_color);
 
-            /*for(int i = 0; i < 5; ++i){
+            for(int i = 0; i < 5; ++i){
                 window.draw(arrayOfCell[i].getShape());
-            }*/
+            }
+
+            window.draw(circle);
 
             window.display();
 
     }
 
-    //delete arrayOfCell;
+    delete[] arrayOfCell;
 }
