@@ -1,7 +1,8 @@
-#include "..\headers\utility\window.h"
+#include "..\headers\utility\windowApp.h"
 
 int main()
 {
-    Window::createWindow();
+    Application app;
+    app.createWindow();
     return 0;
 }

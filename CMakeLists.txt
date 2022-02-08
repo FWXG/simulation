@@ -4,12 +4,10 @@ project(simulation LANGUAGES CXX)
 
 add_executable(simulation 
     src/main.cpp 
-    headers/utility/window.h
-    src/utility/window.cpp
+    headers/utility/windowApp.h
+    src/utility/windowApp.cpp
     src/organisms/cell.cpp
     headers/organisms/cell.h
-    src/organisms/food.cpp
-    headers/organisms/food.h
     src/organisms/baseLive.cpp
     headers/organisms/baseLive.h
     )

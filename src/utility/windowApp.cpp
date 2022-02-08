@@ -1,4 +1,4 @@
-#include "..\..\headers\utility\windowApp.h"
+#include "../../headers/utility/windowApp.h"
 #include "../../headers/organisms/cell.h"
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
@@ -17,9 +17,29 @@ sf::Vector2f randomCellPosition()
     return cellPosition;
 }
 
-void Window::createWindow()
+Application::Application() : window(sf::VideoMode(800, 600), "Test")
 {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Simulation");
+
+}
+
+void Application::handleEvents()
+{
+    sf::Event event;
+    while(window.pollEvent(event))
+    {
+        if (event.type == sf::Event::Closed)
+            window.close();
+
+        if (event.type == sf::Event::Resized)
+        {
+            std::cout << "new width: "  << event.size.width  << std::endl;
+            std::cout << "new height: " << event.size.height << std::endl;
+        }
+    }
+}
+
+void Application::createWindow()
+{
 
     sf::Color window_color(0, 0, 0, 255);
 
@@ -35,41 +55,30 @@ void Window::createWindow()
     Cell oneCell(firstVector);
 
     //Make dynamic array
-    Cell *arrayOfCell = new Cell[5];
+    /*Cell *arrayOfCell = new Cell[5];
     for(int i = 0; i < 5; ++i)
     {
         arrayOfCell[i] = oneCell;
         firstVector.x -= 50.0f;
         firstVector.y -= 10.0f;
         oneCell.setPosition(firstVector);
-    }
+    }*/
 
 
-    sf::Event event;
     while (window.isOpen())
     {
 
-        window.clear(window_color);
+            handleEvents();
 
-        for(int i = 0; i < 5; ++i){
+            window.clear(window_color);
+
+            /*for(int i = 0; i < 5; ++i){
                 window.draw(arrayOfCell[i].getShape());
-        }
+            }*/
 
-        window.display();
-
-            while(window.pollEvent(event))
-            {
-                if (event.type == sf::Event::Closed)
-                    window.close();
-
-                if (event.type == sf::Event::Resized)
-                {
-                    std::cout << "new width: "  << event.size.width  << std::endl;
-                    std::cout << "new height: " << event.size.height << std::endl;
-                }
-            }
+            window.display();
 
     }
 
-    delete arrayOfCell;
+    //delete arrayOfCell;
 }
