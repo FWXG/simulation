@@ -63,6 +63,8 @@ void Application::createWindow()
 
             std::cout << "x: " << mouse.getPosition().x << " y : " << mouse.getPosition().y << std::endl;
 
+            drawGrid();
+
             window.display();
 
     }
@@ -75,6 +77,34 @@ void Application::cellCycle()
     {
 
     }
+}
+
+void Application::drawGrid()
+{
+    int numLines = 1440 + 720 - 2;
+    sf::VertexArray grid(sf::Lines,2*(numLines));
+    window.setView(window.getDefaultView());
+    auto size = window.getView().getSize();
+    float rowG = size.y / 144;
+    float colG = size.y / 288;
+
+    for(int i = 0; i < 144; ++i)
+    {
+        int r = i + 1;
+        float rowY = rowG * r;
+        grid[i * 2].position = {0, rowY};
+        grid[i * 2 + 1].position = {size.x, rowY};
+    }
+
+    for(int i = 144 - 1; i < numLines; ++i)
+    {
+        int c = i - 288 + 2;
+        float colX = colG * c;
+        grid[i * 2].position = {colX, 0};
+        grid[i * 2 + 1].position = {colX, size.y};
+    }
+
+    window.draw(grid);
 }
 
 

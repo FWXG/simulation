@@ -11,9 +11,11 @@ private:
     sf::Mouse mouse;
     sf::RenderWindow window;
     std::vector<Cell> cellColony;
+
     void createArrayOfCells();
     void cellCycle();
     void handleEvents();
+    void drawGrid();
 
 public:
 
