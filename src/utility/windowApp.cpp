@@ -15,7 +15,7 @@ void Application::handleEvents()
     sf::Event event;
     while(window.pollEvent(event))
     {
-        if(event.type == sf::Event::KeyPressed)
+        if(event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
         {
             window.close();
         }
@@ -27,13 +27,12 @@ void Application::handleEvents()
             std::cout << "new height: " << event.size.height << std::endl;
         }
         if(event.type == sf::Event::MouseButtonPressed) // All mouse buttons works
-            std::cout << "PRESSED" << std::endl;
+            createArrayOfCells();
     }
 }
 
 void Application::createArrayOfCells()
 {
-
     sf::Vector2f cellPosition(mouse.getPosition());//Create position for Cell
     Cell oneCell(cellPosition); // Creation Cell
     oneCell.setPosition(cellPosition);
@@ -47,8 +46,6 @@ void Application::createWindow()
 
     while (window.isOpen()) // "Runtime" start here
     {
-
-            createArrayOfCells();
 
             handleEvents();
 
