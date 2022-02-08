@@ -26,17 +26,22 @@ void Application::handleEvents()
             std::cout << "new width: "  << event.size.width  << std::endl;
             std::cout << "new height: " << event.size.height << std::endl;
         }
-        if(event.type == sf::Event::MouseButtonPressed) // All mouse buttons works
+        if(event.type == sf::Event::MouseButtonPressed && sf::Mouse::isButtonPressed(sf::Mouse::Left)) // All mouse buttons works
             createArrayOfCells();
     }
 }
 
 void Application::createArrayOfCells()
 {
-    sf::Vector2f cellPosition(mouse.getPosition());//Create position for Cell
-    Cell oneCell(cellPosition); // Creation Cell
-    oneCell.setPosition(cellPosition);
-    cellColony.push_back(oneCell);
+    if(((mouse.getPosition().x) % 5 == 0) && ((mouse.getPosition().y) % 5 == 0))
+    {
+        sf::Vector2f cellPosition;
+        cellPosition.x = mouse.getPosition().x;
+        cellPosition.y = mouse.getPosition().y;
+        Cell oneCell(cellPosition); // Creation Cell
+        oneCell.setPosition(cellPosition);
+        cellColony.push_back(oneCell);
+    }
 }
 
 void Application::createWindow()
@@ -53,7 +58,7 @@ void Application::createWindow()
 
             for(int i = 0; i < cellColony.size(); ++i){
                 window.draw(cellColony[i].getShape()); // draw shape one cell
-                //arrayCells[i].getPosition(); //cout cell position
+                cellColony[i].getPosition(); //cout cell position
             }
 
             std::cout << "x: " << mouse.getPosition().x << " y : " << mouse.getPosition().y << std::endl;
@@ -63,6 +68,16 @@ void Application::createWindow()
     }
 
 }
+
+void Application::cellCycle()
+{
+    for(int i = 0; i < cellColony.size(); ++i)
+    {
+
+    }
+}
+
+
 
 
 

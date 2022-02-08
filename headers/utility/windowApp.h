@@ -12,13 +12,14 @@ private:
     sf::RenderWindow window;
     std::vector<Cell> cellColony;
     void createArrayOfCells();
+    void cellCycle();
+    void handleEvents();
 
 public:
 
     Application();
-
     void createWindow();
-    void handleEvents();
+
 };
 
 
