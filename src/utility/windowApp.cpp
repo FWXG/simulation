@@ -28,12 +28,17 @@ void Application::handleEvents()
         }
         if(event.type == sf::Event::MouseButtonPressed && sf::Mouse::isButtonPressed(sf::Mouse::Left)) // All mouse buttons works
             createArrayOfCells();
+        if(event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+        {
+            //drawGrid(); // @todo on/off grid on keyboard
+        }
+
     }
 }
 
 void Application::createArrayOfCells()
 {
-    if(((mouse.getPosition().x) % 5 == 0) && ((mouse.getPosition().y) % 5 == 0))
+    if((mouse.getPosition().x % 5 == 0) || (mouse.getPosition().y % 5 == 0))
     {
         sf::Vector2f cellPosition;
         cellPosition.x = mouse.getPosition().x;
@@ -66,11 +71,11 @@ void Application::createWindow()
             drawGrid();
 
             window.display();
-
     }
 
 }
 
+// Life cell cycle
 void Application::cellCycle()
 {
     for(int i = 0; i < cellColony.size(); ++i)
@@ -81,30 +86,31 @@ void Application::cellCycle()
 
 void Application::drawGrid()
 {
-    int numLines = 1440 + 720 - 2;
-    sf::VertexArray grid(sf::Lines,2*(numLines));
-    window.setView(window.getDefaultView());
-    auto size = window.getView().getSize();
-    float rowG = size.y / 144;
-    float colG = size.y / 288;
+        int numLines = 1679 + 1049 - 2;
+        sf::VertexArray grid(sf::Lines,2*(numLines)); // Make vertex array of line primitives
+        window.setView(window.getDefaultView());
+        auto size = window.getView().getSize();// Get size of window
+        float rowG = size.y / 210;
+        float colG = size.y / 336;
 
-    for(int i = 0; i < 144; ++i)
-    {
-        int r = i + 1;
-        float rowY = rowG * r;
-        grid[i * 2].position = {0, rowY};
-        grid[i * 2 + 1].position = {size.x, rowY};
-    }
+        for(int i = 0; i < 209; ++i)
+        {
+            int r = i + 1;
+            float rowY = rowG * r;
+            grid[i * 2].position = {0, rowY};
+            grid[i * 2 + 1].position = {size.x, rowY};
+        }
 
-    for(int i = 144 - 1; i < numLines; ++i)
-    {
-        int c = i - 288 + 2;
-        float colX = colG * c;
-        grid[i * 2].position = {colX, 0};
-        grid[i * 2 + 1].position = {colX, size.y};
-    }
+        for(int i = 209 - 1; i < numLines; ++i)
+        {
+            int c = i - 335 + 2;
+            float colX = colG * c;
+            grid[i * 2].position = {colX, 0};
+            grid[i * 2 + 1].position = {colX, size.y};
+        }
 
-    window.draw(grid);
+        window.draw(grid);
+
 }
 
 

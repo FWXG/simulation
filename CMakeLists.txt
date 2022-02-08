@@ -8,8 +8,6 @@ add_executable(simulation
     src/utility/windowApp.cpp
     src/organisms/cell.cpp
     headers/organisms/cell.h
-    src/organisms/baseLive.cpp
-    headers/organisms/baseLive.h
     )
 
 add_subdirectory(external/sfml)
