@@ -86,14 +86,14 @@ void Application::cellCycle()
 
 void Application::drawGrid()
 {
-        int numLines = 1679 + 1049 - 2;
-        sf::VertexArray grid(sf::Lines,2*(numLines)); // Make vertex array of line primitives
+        int numLines = gridCols + gridRows - 2; //Minus two start pixels
+        sf::VertexArray grid(sf::Lines, 2*numLines); // Make vertex array of line primitives
         window.setView(window.getDefaultView());
         auto size = window.getView().getSize();// Get size of window
-        float rowG = size.y / 210;
-        float colG = size.y / 336;
+        float rowG = size.y / gridRows;
+        float colG = size.x / gridCols;
 
-        for(int i = 0; i < 209; ++i)
+        for(int i = 0; i < gridRows - 1; ++i)
         {
             int r = i + 1;
             float rowY = rowG * r;
@@ -101,9 +101,9 @@ void Application::drawGrid()
             grid[i * 2 + 1].position = {size.x, rowY};
         }
 
-        for(int i = 209 - 1; i < numLines; ++i)
+        for(int i = gridRows - 1; i < numLines; ++i)
         {
-            int c = i - 335 + 2;
+            int c = i - gridRows + 2;
             float colX = colG * c;
             grid[i * 2].position = {colX, 0};
             grid[i * 2 + 1].position = {colX, size.y};
