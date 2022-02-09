@@ -5,7 +5,8 @@
 #include <random>
 #include <iostream>
 
-Application::Application() : window(sf::VideoMode(1440, 720, 32), "Live Simulation", sf::Style::Fullscreen)
+Application::Application() : window(sf::VideoMode(sf::VideoMode::getDesktopMode().width,
+                                                   sf::VideoMode::getDesktopMode().height, 32), "Live Simulation", sf::Style::Fullscreen)
 {
 
 }
@@ -63,13 +64,14 @@ void Application::createWindow()
             //createArrayOfCells(); // put cells from mouse
             handleEvents();
 
+            cellCycle();
 
             for(int i = 0; i < cellColony.size(); ++i){
                 window.draw(cellColony[i].getShape()); // draw shape one cell
                 //cellColony[i].getPosition(); //cout cell position
             }
 
-            //std::cout << "x: " << mouse.getPosition().x << " y : " << mouse.getPosition().y << std::endl;
+            std::cout << "x: " << mouse.getPosition().x << " y : " << mouse.getPosition().y << std::endl;
 
             drawGrid();
 
@@ -83,20 +85,26 @@ void Application::cellCycle()
 {
     for(int i = 0; i < cellColony.size(); ++i)
     {
-        cellColony[i].getPositionX();
-        cellColony[i].getPositionY();
+        //std::cout << cellColony[i].getPositionX() << std::endl;
 
         for(int j = i + 1; j < cellColony.size(); ++j)
         {
-            if((cellColony[i].getPositionX() == cellColony[j].getPositionX()))
-                ++cellFlag;
+            if(cellColony[i].getPositionY() == cellColony[j].getPositionY())
+            {
+                if((cellColony[i].getPositionX() == (cellColony[j].getPositionX() - 10)
+                        || (cellColony[i].getPositionX() == (cellColony[j].getPositionX() + 10))))
+                    std::cout << "closeX" << std::endl;
+            }
+
+            if(cellColony[i].getPositionX() == cellColony[j].getPositionX())
+            {
+                if((cellColony[i].getPositionY() == (cellColony[j].getPositionY() - 10)
+                        || (cellColony[i].getPositionY() == (cellColony[j].getPositionY() + 10))))
+                    std::cout << "closeY" <<std::endl;
+            }
+
         }
     }
-
-    if(cellFlag < 2)
-        cellColony.pop_back();
-    else if(cellFlag > 3)
-        cellColony.pop_back();
 
 }
 

@@ -39,4 +39,3 @@ int Cell::getPositionY()
 {
     return this->position.y;
 }
-

@@ -20,10 +20,13 @@ public:
 
     Cell();
     Cell(sf::Vector2f foodPosition);
+
     static const int cellRadius = 5;
     void setPosition(sf::Vector2f cellPosition);
+
     int getPositionX();
     int getPositionY();
+
     sf::CircleShape getShape();
 };
 
