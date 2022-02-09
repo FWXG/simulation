@@ -18,6 +18,9 @@ public:
         ALIVE
     };
 
+
+    unsigned cellFlag[9];
+
     Cell();
     Cell(sf::Vector2f foodPosition);
 

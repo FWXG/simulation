@@ -38,6 +38,10 @@ void Application::handleEvents()
         {
             isGridOpen = false;
         }
+        if(event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::P))
+        {
+            isGamePause = false;
+        }
 
     }
 }
@@ -71,7 +75,7 @@ void Application::createWindow()
                 //cellColony[i].getPosition(); //cout cell position
             }
 
-            std::cout << "x: " << mouse.getPosition().x << " y : " << mouse.getPosition().y << std::endl;
+            //std::cout << "x: " << mouse.getPosition().x << " y : " << mouse.getPosition().y << std::endl;
 
             drawGrid();
 
@@ -83,28 +87,40 @@ void Application::createWindow()
 // Life cell cycle
 void Application::cellCycle()
 {
-    for(int i = 0; i < cellColony.size(); ++i)
+
+    if(!isGamePause)
     {
-        //std::cout << cellColony[i].getPositionX() << std::endl;
-
-        for(int j = i + 1; j < cellColony.size(); ++j)
+        for(int i = 0; i < cellColony.size(); ++i)
         {
-            if(cellColony[i].getPositionY() == cellColony[j].getPositionY())
-            {
-                if((cellColony[i].getPositionX() == (cellColony[j].getPositionX() - 10)
-                        || (cellColony[i].getPositionX() == (cellColony[j].getPositionX() + 10))))
-                    std::cout << "closeX" << std::endl;
-            }
 
-            if(cellColony[i].getPositionX() == cellColony[j].getPositionX())
+            //std::cout << cellColony[i].getPositionX() << std::endl;
+
+            for(int j = i + 1; j < cellColony.size(); ++j)
             {
-                if((cellColony[i].getPositionY() == (cellColony[j].getPositionY() - 10)
-                        || (cellColony[i].getPositionY() == (cellColony[j].getPositionY() + 10))))
-                    std::cout << "closeY" <<std::endl;
+                if(cellColony[i].getPositionY() == cellColony[j].getPositionY())
+                {
+                    if((cellColony[i].getPositionX() == (cellColony[j].getPositionX() - 10)
+                            || (cellColony[i].getPositionX() == (cellColony[j].getPositionX() + 10))))
+                    {
+                        std::cout << "close X" << std::endl;
+                    }
+                }
+
+                if(cellColony[i].getPositionX() == cellColony[j].getPositionX())
+                {
+                    if((cellColony[i].getPositionY() == (cellColony[j].getPositionY() - 10)
+                            || (cellColony[i].getPositionY() == (cellColony[j].getPositionY() + 10))))
+                    {
+                        std::cout << "close Y" << std::endl;
+                    }
+                }
+
             }
 
         }
     }
+
+
 
 }
 
