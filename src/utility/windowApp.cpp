@@ -92,9 +92,8 @@ void Application::cellCycle()
     {
         for(int i = 0; i < cellColony.size(); ++i)
         {
-
+            int f = 1;
             //std::cout << cellColony[i].getPositionX() << std::endl;
-
             for(int j = i + 1; j < cellColony.size(); ++j)
             {
                 if(cellColony[i].getPositionY() == cellColony[j].getPositionY())
@@ -102,7 +101,11 @@ void Application::cellCycle()
                     if((cellColony[i].getPositionX() == (cellColony[j].getPositionX() - 10)
                             || (cellColony[i].getPositionX() == (cellColony[j].getPositionX() + 10))))
                     {
-                        std::cout << "close X" << std::endl;
+                        //std::cout << "close X" << std::endl;
+                        if(!cellColony[i].cellFlag[f]){
+                            ++cellColony[i].cellFlag[f];
+                            ++f;
+                        }
                     }
                 }
 
@@ -111,11 +114,17 @@ void Application::cellCycle()
                     if((cellColony[i].getPositionY() == (cellColony[j].getPositionY() - 10)
                             || (cellColony[i].getPositionY() == (cellColony[j].getPositionY() + 10))))
                     {
-                        std::cout << "close Y" << std::endl;
+                        //std::cout << "close Y" << std::endl;
+                        if(!cellColony[i].cellFlag[f]){
+                            ++cellColony[i].cellFlag[f];
+                            ++f;
+                        }
                     }
                 }
 
             }
+
+            std::cout << cellColony[i].cellFlag[f] << std::endl;
 
         }
     }
