@@ -42,6 +42,10 @@ void Application::handleEvents()
         {
             isGamePause = false;
         }
+        if (event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+        {
+            isGamePause = true;
+        }
 
     }
 }
@@ -92,7 +96,6 @@ void Application::cellCycle()
     {
         for(int i = 0; i < cellColony.size(); ++i)
         {
-            int f = 1;
             //std::cout << cellColony[i].getPositionX() << std::endl;
             for(int j = i + 1; j < cellColony.size(); ++j)
             {
@@ -101,11 +104,8 @@ void Application::cellCycle()
                     if((cellColony[i].getPositionX() == (cellColony[j].getPositionX() - 10)
                             || (cellColony[i].getPositionX() == (cellColony[j].getPositionX() + 10))))
                     {
-                        //std::cout << "close X" << std::endl;
-                        if(!cellColony[i].cellFlag[f]){
-                            ++cellColony[i].cellFlag[f];
-                            ++f;
-                        }
+                        std::cout << "i: " << i << std::endl; // Position in array
+
                     }
                 }
 
@@ -114,17 +114,13 @@ void Application::cellCycle()
                     if((cellColony[i].getPositionY() == (cellColony[j].getPositionY() - 10)
                             || (cellColony[i].getPositionY() == (cellColony[j].getPositionY() + 10))))
                     {
-                        //std::cout << "close Y" << std::endl;
-                        if(!cellColony[i].cellFlag[f]){
-                            ++cellColony[i].cellFlag[f];
-                            ++f;
-                        }
+                        std::cout << "j: " << j << std::endl;
                     }
                 }
 
             }
 
-            std::cout << cellColony[i].cellFlag[f] << std::endl;
+            std::cout << "--------------------" << std::endl;
 
         }
     }

@@ -8,12 +8,11 @@ class Application
 {
 private:
 
-    bool isGridOpen;
+    bool isGridOpen = false;
     bool isGamePause = true;
 
     const int gridRows = sf::VideoMode::getDesktopMode().height / (Cell::cellRadius * 2); // Size of screen divided by 10
     const int gridCols = sf::VideoMode::getDesktopMode().width / (Cell::cellRadius * 2);
-    int cellFlag;
 
     sf::Mouse mouse;
     sf::RenderWindow window;
