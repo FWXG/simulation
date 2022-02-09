@@ -12,12 +12,11 @@ Cell::Cell()
 
 Cell::Cell(sf::Vector2f cellPosition)
 {
-    (this->form).setRadius(5.0f);
+    (this->form).setRadius(cellRadius);
     (this->form).setFillColor(sf::Color::Green);
     (this->form).setPosition(cellPosition);
 
     this->position = cellPosition;
-
 }
 
 void Cell::setPosition(sf::Vector2f cellPosition)
@@ -31,8 +30,13 @@ sf::CircleShape Cell::getShape()
     return this->form;
 }
 
-void Cell::getPosition()
+int Cell::getPositionX()
 {
-    std::cout << "x: " << this->position.x << "y: " << this->position.y << std::endl;
+    return this->position.x;
+}
+
+int Cell::getPositionY()
+{
+    return this->position.y;
 }
 

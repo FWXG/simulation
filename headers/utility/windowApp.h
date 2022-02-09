@@ -8,8 +8,9 @@ class Application
 {
 private:
 
-    const int gridRows = 105; // Size of screen divided by 10
-    const int gridCols = 168;
+    const int gridRows = sf::VideoMode::getDesktopMode().height / (Cell::cellRadius * 2); // Size of screen divided by 10
+    const int gridCols = sf::VideoMode::getDesktopMode().width / (Cell::cellRadius * 2);
+    int cellFlag;
     sf::Mouse mouse;
     sf::RenderWindow window;
     std::vector<Cell> cellColony;

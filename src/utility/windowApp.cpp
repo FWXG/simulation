@@ -38,16 +38,17 @@ void Application::handleEvents()
 
 void Application::createArrayOfCells()
 {
-    if((mouse.getPosition().x % 10 == 0) && (mouse.getPosition().y % 10 == 0))
+    /*if((mouse.getPosition().x % (Cell::cellRadius * 2) == 0) && (mouse.getPosition().y % (Cell::cellRadius * 2) == 0))
     {
-        //std::cout << mouse.getPosition().x % 5 << " " << mouse.getPosition().y % 5 << std::endl;
-        sf::Vector2f cellPosition;
-        cellPosition.x = mouse.getPosition().x;
-        cellPosition.y = mouse.getPosition().y;
-        Cell oneCell(cellPosition); // Creation Cell
-        oneCell.setPosition(cellPosition);
-        cellColony.push_back(oneCell);
-    }
+
+    }*/
+
+    sf::Vector2f cellPosition;
+    cellPosition.x = mouse.getPosition().x  - mouse.getPosition().x % 10;
+    cellPosition.y = mouse.getPosition().y  - mouse.getPosition().y % 10;
+    Cell oneCell(cellPosition); // Creation Cell
+    oneCell.setPosition(cellPosition);
+    cellColony.push_back(oneCell);
 }
 
 void Application::createWindow()
@@ -58,7 +59,6 @@ void Application::createWindow()
     {
 
             createArrayOfCells();
-
             handleEvents();
 
             window.clear(window_color);
@@ -82,8 +82,22 @@ void Application::cellCycle()
 {
     for(int i = 0; i < cellColony.size(); ++i)
     {
+        cellColony[i].getPositionX();
+        cellColony[i].getPositionY();
 
+        for(int j = i + 1; j < cellColony.size(); ++j)
+        {
+            if((cellColony[i].getPositionX() == cellColony[j].getPositionX()))
+                ++cellFlag;
+
+        }
     }
+
+    if(cellFlag < 2)
+        cellColony.pop_back();
+    else if(cellFlag > 3)
+        cellColony.pop_back();
+
 }
 
 void Application::drawGrid()

@@ -12,10 +12,18 @@ private:
 
 public:
 
+    enum class isAlive
+    {
+        DEAD,
+        ALIVE
+    };
+
     Cell();
     Cell(sf::Vector2f foodPosition);
+    static const int cellRadius = 5;
     void setPosition(sf::Vector2f cellPosition);
-    void getPosition();
+    int getPositionX();
+    int getPositionY();
     sf::CircleShape getShape();
 };
 
