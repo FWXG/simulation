@@ -8,6 +8,14 @@ class Application
 {
 private:
 
+    enum directionFlag
+    {
+        TOP_POSITION,
+        BOTTOM_POSITION,
+        RIGHT_POSITION,
+        LEFT_POSITION
+    };
+
     bool isGridOpen = false;
     bool isGamePause = true;
 

@@ -101,20 +101,25 @@ void Application::cellCycle()
             {
                 if(cellColony[i].getPositionY() == cellColony[j].getPositionY())
                 {
-                    if((cellColony[i].getPositionX() == (cellColony[j].getPositionX() - 10)
-                            || (cellColony[i].getPositionX() == (cellColony[j].getPositionX() + 10))))
+                    if((cellColony[i].getPositionX() == (cellColony[j].getPositionX() - 10)))
                     {
-                        std::cout << "i: " << i << std::endl; // Position in array
-
+                        cellColony[i].cellFlag[LEFT_POSITION];
+                    }
+                    if ((cellColony[i].getPositionX() == (cellColony[j].getPositionX() + 10)))
+                    {
+                        cellColony[i].cellFlag[RIGHT_POSITION];
                     }
                 }
 
                 if(cellColony[i].getPositionX() == cellColony[j].getPositionX())
                 {
-                    if((cellColony[i].getPositionY() == (cellColony[j].getPositionY() - 10)
-                            || (cellColony[i].getPositionY() == (cellColony[j].getPositionY() + 10))))
+                    if((cellColony[i].getPositionY() == (cellColony[j].getPositionY() - 10)))
                     {
-                        std::cout << "j: " << j << std::endl;
+                        cellColony[i].cellFlag[TOP_POSITION];
+                    }
+                    if ((cellColony[i].getPositionY() == (cellColony[j].getPositionY() + 10)))
+                    {
+                        cellColony[i].cellFlag[BOTTOM_POSITION];
                     }
                 }
 
