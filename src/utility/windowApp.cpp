@@ -30,7 +30,12 @@ void Application::handleEvents()
             createArrayOfCells();
         if(event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
         {
-            //drawGrid(); // @todo on/off grid on keyboard
+            std::cout << "grid open";
+            isGridOpen = true;
+        }
+        if(event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+        {
+            isGridOpen = false;
         }
 
     }
@@ -38,11 +43,6 @@ void Application::handleEvents()
 
 void Application::createArrayOfCells()
 {
-    /*if((mouse.getPosition().x % (Cell::cellRadius * 2) == 0) && (mouse.getPosition().y % (Cell::cellRadius * 2) == 0))
-    {
-
-    }*/
-
     sf::Vector2f cellPosition;
     cellPosition.x = mouse.getPosition().x  - mouse.getPosition().x % 10;
     cellPosition.y = mouse.getPosition().y  - mouse.getPosition().y % 10;
@@ -58,17 +58,18 @@ void Application::createWindow()
     while (window.isOpen()) // "Runtime" start here
     {
 
-            createArrayOfCells();
+            window.clear(window_color);
+
+            //createArrayOfCells(); // put cells from mouse
             handleEvents();
 
-            window.clear(window_color);
 
             for(int i = 0; i < cellColony.size(); ++i){
                 window.draw(cellColony[i].getShape()); // draw shape one cell
                 //cellColony[i].getPosition(); //cout cell position
             }
 
-            std::cout << "x: " << mouse.getPosition().x << " y : " << mouse.getPosition().y << std::endl;
+            //std::cout << "x: " << mouse.getPosition().x << " y : " << mouse.getPosition().y << std::endl;
 
             drawGrid();
 
@@ -89,7 +90,6 @@ void Application::cellCycle()
         {
             if((cellColony[i].getPositionX() == cellColony[j].getPositionX()))
                 ++cellFlag;
-
         }
     }
 
@@ -102,30 +102,33 @@ void Application::cellCycle()
 
 void Application::drawGrid()
 {
-        int numLines = gridCols + gridRows - 2; //Minus two start pixels
-        sf::VertexArray grid(sf::Lines, 2*numLines); // Make vertex array of line primitives
-        window.setView(window.getDefaultView());
-        auto size = window.getView().getSize();// Get size of window
-        float rowG = size.y / gridRows;
-        float colG = size.x / gridCols;
-
-        for(int i = 0; i < gridRows - 1; ++i)
+        if(isGridOpen)
         {
-            int r = i + 1;
-            float rowY = rowG * r;
-            grid[i * 2].position = {0, rowY};
-            grid[i * 2 + 1].position = {size.x, rowY};
-        }
+             int numLines = gridCols + gridRows - 2; //Minus two start pixels
+            sf::VertexArray grid(sf::Lines, 2*numLines); // Make vertex array of line primitives
+            window.setView(window.getDefaultView());
+            auto size = window.getView().getSize();// Get size of window
+            float rowG = size.y / gridRows;
+            float colG = size.x / gridCols;
 
-        for(int i = gridRows - 1; i < numLines; ++i)
-        {
-            int c = i - gridRows + 2;
-            float colX = colG * c;
-            grid[i * 2].position = {colX, 0};
-            grid[i * 2 + 1].position = {colX, size.y};
-        }
+            for(int i = 0; i < gridRows - 1; ++i)
+            {
+                int r = i + 1;
+                float rowY = rowG * r;
+                grid[i * 2].position = {0, rowY};
+                grid[i * 2 + 1].position = {size.x, rowY};
+            }
 
-        window.draw(grid);
+            for(int i = gridRows - 1; i < numLines; ++i)
+            {
+                int c = i - gridRows + 2;
+                float colX = colG * c;
+                grid[i * 2].position = {colX, 0};
+                grid[i * 2 + 1].position = {colX, size.y};
+            }
+
+            window.draw(grid);
+        }
 
 }
 
