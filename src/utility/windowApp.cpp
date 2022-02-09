@@ -38,8 +38,9 @@ void Application::handleEvents()
 
 void Application::createArrayOfCells()
 {
-    if((mouse.getPosition().x % 5 == 0) || (mouse.getPosition().y % 5 == 0))
+    if((mouse.getPosition().x % 10 == 0) && (mouse.getPosition().y % 10 == 0))
     {
+        //std::cout << mouse.getPosition().x % 5 << " " << mouse.getPosition().y % 5 << std::endl;
         sf::Vector2f cellPosition;
         cellPosition.x = mouse.getPosition().x;
         cellPosition.y = mouse.getPosition().y;
@@ -51,11 +52,12 @@ void Application::createArrayOfCells()
 
 void Application::createWindow()
 {
-
     sf::Color window_color(0, 0, 0, 255);
 
     while (window.isOpen()) // "Runtime" start here
     {
+
+            createArrayOfCells();
 
             handleEvents();
 
@@ -63,7 +65,7 @@ void Application::createWindow()
 
             for(int i = 0; i < cellColony.size(); ++i){
                 window.draw(cellColony[i].getShape()); // draw shape one cell
-                cellColony[i].getPosition(); //cout cell position
+                //cellColony[i].getPosition(); //cout cell position
             }
 
             std::cout << "x: " << mouse.getPosition().x << " y : " << mouse.getPosition().y << std::endl;

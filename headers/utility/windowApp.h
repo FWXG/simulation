@@ -8,8 +8,8 @@ class Application
 {
 private:
 
-    const int gridRows = 30;
-    const int gridCols = 30;
+    const int gridRows = 105; // Size of screen divided by 10
+    const int gridCols = 168;
     sf::Mouse mouse;
     sf::RenderWindow window;
     std::vector<Cell> cellColony;
