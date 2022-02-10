@@ -96,7 +96,7 @@ void Application::cellCycle()
 {
         for(int i = 0; i < cellColony.size(); ++i)
         {
-            if(cellColony[i].isAlive)
+            if(true)
             {
                 for(int j = 0; j < cellColony.size(); ++j)
                 {
@@ -169,18 +169,16 @@ void Application::cellLife()
             sum += cellColony[i].cellFlag[j];
         }
 
-        std::cout << "sum i:" << i << " " << sum;
-        std::cout << "cell i:" << i << " " << std::boolalpha << cellColony[i].isAlive << std::endl;
-
-
         if(sum < 2 || sum > 3){
             cellColony[i].isAlive = false;
             cellColony[i].deadCell();
         }
         if(sum == 3 || sum == 2){
 
-            if(!cellColony[i].isAlive)
+            if(!cellColony[i].isAlive){
+                cellColony[i].isAlive = true;
                 cellColony[i].liveCell();
+            }
 
             cellColony[i].liveCell();
         }
