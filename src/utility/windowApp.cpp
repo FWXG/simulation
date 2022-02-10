@@ -103,11 +103,11 @@ void Application::cellCycle()
                 {
                     if((cellColony[i].getPositionX() == (cellColony[j].getPositionX() - 10)))
                     {
-                        cellColony[i].cellFlag[LEFT_POSITION];
+                        cellColony[i].cellFlag[RIGHT_POSITION] = 1;
                     }
                     if ((cellColony[i].getPositionX() == (cellColony[j].getPositionX() + 10)))
                     {
-                        cellColony[i].cellFlag[RIGHT_POSITION];
+                        cellColony[i].cellFlag[LEFT_POSITION] = 2;
                     }
                 }
 
@@ -115,18 +115,20 @@ void Application::cellCycle()
                 {
                     if((cellColony[i].getPositionY() == (cellColony[j].getPositionY() - 10)))
                     {
-                        cellColony[i].cellFlag[TOP_POSITION];
+                        cellColony[i].cellFlag[BOTTOM_POSITION] = 3;
                     }
                     if ((cellColony[i].getPositionY() == (cellColony[j].getPositionY() + 10)))
                     {
-                        cellColony[i].cellFlag[BOTTOM_POSITION];
+                        cellColony[i].cellFlag[TOP_POSITION] = 4;
                     }
                 }
 
             }
 
-            std::cout << "--------------------" << std::endl;
-
+            std::cout << cellColony[i].cellFlag[RIGHT_POSITION] << std::endl;
+            std::cout << cellColony[i].cellFlag[LEFT_POSITION] << std::endl;
+            std::cout << cellColony[i].cellFlag[BOTTOM_POSITION] << std::endl;
+            std::cout << cellColony[i].cellFlag[TOP_POSITION] << std::endl;
         }
     }
 
