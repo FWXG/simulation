@@ -169,6 +169,8 @@ void Application::cellLife()
             sum += cellColony[i].cellFlag[j];
         }
 
+        std::cout << "cell number: " << i << " " << "sum :" << sum << std::endl;
+
         if(sum < 2 || sum > 3){
             cellColony[i].isAlive = false;
             cellColony[i].deadCell();
