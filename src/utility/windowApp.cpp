@@ -73,6 +73,7 @@ void Application::createWindow()
             handleEvents();
 
             cellCycle();
+            cellLife();
 
             for(int i = 0; i < cellColony.size(); ++i){
                 window.draw(cellColony[i].getShape()); // draw shape one cell
@@ -99,6 +100,7 @@ void Application::cellCycle()
             //std::cout << cellColony[i].getPositionX() << std::endl;
             for(int j = i + 1; j < cellColony.size(); ++j)
             {
+                //For + direction
                 if(cellColony[i].getPositionY() == cellColony[j].getPositionY())
                 {
                     if((cellColony[i].getPositionX() == (cellColony[j].getPositionX() - 10)))
@@ -107,7 +109,7 @@ void Application::cellCycle()
                     }
                     if ((cellColony[i].getPositionX() == (cellColony[j].getPositionX() + 10)))
                     {
-                        cellColony[i].cellFlag[LEFT_POSITION] = 2;
+                        cellColony[i].cellFlag[LEFT_POSITION] = 1;
                     }
                 }
 
@@ -115,25 +117,69 @@ void Application::cellCycle()
                 {
                     if((cellColony[i].getPositionY() == (cellColony[j].getPositionY() - 10)))
                     {
-                        cellColony[i].cellFlag[BOTTOM_POSITION] = 3;
+                        cellColony[i].cellFlag[BOTTOM_POSITION] = 1;
                     }
                     if ((cellColony[i].getPositionY() == (cellColony[j].getPositionY() + 10)))
                     {
-                        cellColony[i].cellFlag[TOP_POSITION] = 4;
+                        cellColony[i].cellFlag[TOP_POSITION] = 1;
                     }
                 }
-
+                // For x direction
+                if(cellColony[i].getPositionX() == (cellColony[j].getPositionX() - 10))
+                {
+                    if(cellColony[i].getPositionY() == (cellColony[j].getPositionY() + 10))
+                    {
+                        cellColony[i].cellFlag[TOP_RIGHT_POSITION] = 1;
+                    }
+                    if(cellColony[i].getPositionY() == (cellColony[j].getPositionY() - 10))
+                    {
+                        cellColony[i].cellFlag[BOTTOM_RIGHT_POSITION] = 1;
+                    }
+                }
+                if(cellColony[i].getPositionX() == (cellColony[j].getPositionX() + 10))
+                {
+                    if(cellColony[i].getPositionY() == (cellColony[j].getPositionY() + 10))
+                    {
+                        cellColony[i].cellFlag[TOP_LEFT_POSITION] = 1;
+                    }
+                    if(cellColony[i].getPositionY() == (cellColony[j].getPositionY() - 10))
+                    {
+                        cellColony[i].cellFlag[BOTTOM_LEFT_POSITION] = 1;
+                    }
+                }
             }
 
-            std::cout << cellColony[i].cellFlag[RIGHT_POSITION] << std::endl;
+            /*std::cout << cellColony[i].cellFlag[RIGHT_POSITION] << std::endl;
             std::cout << cellColony[i].cellFlag[LEFT_POSITION] << std::endl;
             std::cout << cellColony[i].cellFlag[BOTTOM_POSITION] << std::endl;
             std::cout << cellColony[i].cellFlag[TOP_POSITION] << std::endl;
+            std::cout << cellColony[i].cellFlag[TOP_LEFT_POSITION] << std::endl;
+            std::cout << cellColony[i].cellFlag[TOP_RIGHT_POSITION] << std::endl;
+            std::cout << cellColony[i].cellFlag[BOTTOM_LEFT_POSITION] << std::endl;
+            std::cout << cellColony[i].cellFlag[BOTTOM_RIGHT_POSITION] << std::endl;*/
         }
     }
+}
+
+void Application::cellLife()
+{
+    for(int i = 0; i < cellColony.size(); ++i)
+    {
+        int sum = 0;
+        for(int j = 1; j < 9; ++j){
+            //std::cout << "i: " << i << " " << "j: " << j << " " << cellColony[i].cellFlag[j] << std::endl;
+            sum += cellColony[i].cellFlag[j];
+        }
+
+        std::cout << sum << std::endl;
+        if(sum == 0) continue;
 
 
-
+        if(sum < 2 || sum > 3)
+            cellColony[i].deadCell();
+        else if(sum == 3 || sum == 3)
+            cellColony[i].liveCell();
+    }
 }
 
 void Application::drawGrid()

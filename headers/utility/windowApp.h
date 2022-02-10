@@ -13,7 +13,11 @@ private:
         TOP_POSITION,
         BOTTOM_POSITION,
         RIGHT_POSITION,
-        LEFT_POSITION
+        LEFT_POSITION,
+        TOP_RIGHT_POSITION,
+        TOP_LEFT_POSITION,
+        BOTTOM_RIGHT_POSITION,
+        BOTTOM_LEFT_POSITION
     };
 
     bool isGridOpen = false;
@@ -31,6 +35,7 @@ private:
     void cellCycle();
     void handleEvents();
     void drawGrid();
+    void cellLife();
 
 public:
 
