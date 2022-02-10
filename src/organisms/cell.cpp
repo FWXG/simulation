@@ -39,18 +39,3 @@ int Cell::getPositionY()
 {
     return this->position.y;
 }
-
-sf::Color Cell::getColor()
-{
-    return this->form.getFillColor();
-}
-
-void Cell::deadCell()
-{
-    (this->form).setFillColor(sf::Color::Black);
-}
-
-void Cell::liveCell()
-{
-    (this->form).setFillColor(sf::Color::Green);
-}
