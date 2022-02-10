@@ -11,11 +11,7 @@ private:
 
 public:
 
-    enum class isAlive
-    {
-        DEAD,
-        ALIVE
-    };
+    bool isAlive = true;
 
     unsigned cellFlag[9]{};
 
@@ -23,6 +19,7 @@ public:
     Cell(sf::Vector2f foodPosition);
 
     static const int cellRadius = 5;
+
     void setPosition(sf::Vector2f cellPosition);
     void deadCell();
     void liveCell();
@@ -31,6 +28,7 @@ public:
     int getPositionY();
 
     sf::CircleShape getShape();
+    sf::Color getColor();
 };
 
 

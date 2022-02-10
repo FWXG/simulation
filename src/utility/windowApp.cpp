@@ -68,12 +68,14 @@ void Application::createWindow()
     {
 
             window.clear(window_color);
-
             //createArrayOfCells(); // put cells from mouse
             handleEvents();
 
-            cellCycle();
-            cellLife();
+            if(!isGamePause)
+            {
+                cellCycle();
+                cellLife();
+            }
 
             for(int i = 0; i < cellColony.size(); ++i){
                 window.draw(cellColony[i].getShape()); // draw shape one cell
@@ -92,73 +94,69 @@ void Application::createWindow()
 // Life cell cycle
 void Application::cellCycle()
 {
-
-    if(!isGamePause)
-    {
         for(int i = 0; i < cellColony.size(); ++i)
         {
-            //std::cout << cellColony[i].getPositionX() << std::endl;
-            for(int j = i + 1; j < cellColony.size(); ++j)
+            if(cellColony[i].isAlive)
             {
-                //For + direction
-                if(cellColony[i].getPositionY() == cellColony[j].getPositionY())
+                for(int j = 0; j < cellColony.size(); ++j)
                 {
-                    if((cellColony[i].getPositionX() == (cellColony[j].getPositionX() - 10)))
+                    if(i == j) continue;
+                    //For + direction
+                    if(cellColony[j].isAlive)
                     {
-                        cellColony[i].cellFlag[RIGHT_POSITION] = 1;
+                        if(cellColony[i].getPositionY() == cellColony[j].getPositionY())
+                        {
+                            if((cellColony[i].getPositionX() == (cellColony[j].getPositionX() - 10)))
+                            {
+                                cellColony[i].cellFlag[RIGHT_POSITION] = 1;
+                            }
+                            if ((cellColony[i].getPositionX() == (cellColony[j].getPositionX() + 10)))
+                            {
+                                cellColony[i].cellFlag[LEFT_POSITION] = 1;
+                            }
+                        }
+
+                        if(cellColony[i].getPositionX() == cellColony[j].getPositionX())
+                        {
+                            if((cellColony[i].getPositionY() == (cellColony[j].getPositionY() - 10)))
+                            {
+                                cellColony[i].cellFlag[BOTTOM_POSITION] = 1;
+                            }
+                            if ((cellColony[i].getPositionY() == (cellColony[j].getPositionY() + 10)))
+                            {
+                                cellColony[i].cellFlag[TOP_POSITION] = 1;
+                            }
+                        }
+                    // For x direction
+                        if(cellColony[i].getPositionX() == (cellColony[j].getPositionX() - 10))
+                        {
+                            if(cellColony[i].getPositionY() == (cellColony[j].getPositionY() + 10))
+                            {
+                                cellColony[i].cellFlag[TOP_RIGHT_POSITION] = 1;
+                            }
+                            if(cellColony[i].getPositionY() == (cellColony[j].getPositionY() - 10))
+                            {
+                                cellColony[i].cellFlag[BOTTOM_RIGHT_POSITION] = 1;
+                            }
+                        }
+                        if(cellColony[i].getPositionX() == (cellColony[j].getPositionX() + 10))
+                        {
+                            if(cellColony[i].getPositionY() == (cellColony[j].getPositionY() + 10))
+                            {
+                                cellColony[i].cellFlag[TOP_LEFT_POSITION] = 1;
+                            }
+                            if(cellColony[i].getPositionY() == (cellColony[j].getPositionY() - 10))
+                            {
+                                cellColony[i].cellFlag[BOTTOM_LEFT_POSITION] = 1;
+                            }
+                        }
                     }
-                    if ((cellColony[i].getPositionX() == (cellColony[j].getPositionX() + 10)))
-                    {
-                        cellColony[i].cellFlag[LEFT_POSITION] = 1;
-                    }
+
                 }
 
-                if(cellColony[i].getPositionX() == cellColony[j].getPositionX())
-                {
-                    if((cellColony[i].getPositionY() == (cellColony[j].getPositionY() - 10)))
-                    {
-                        cellColony[i].cellFlag[BOTTOM_POSITION] = 1;
-                    }
-                    if ((cellColony[i].getPositionY() == (cellColony[j].getPositionY() + 10)))
-                    {
-                        cellColony[i].cellFlag[TOP_POSITION] = 1;
-                    }
-                }
-                // For x direction
-                if(cellColony[i].getPositionX() == (cellColony[j].getPositionX() - 10))
-                {
-                    if(cellColony[i].getPositionY() == (cellColony[j].getPositionY() + 10))
-                    {
-                        cellColony[i].cellFlag[TOP_RIGHT_POSITION] = 1;
-                    }
-                    if(cellColony[i].getPositionY() == (cellColony[j].getPositionY() - 10))
-                    {
-                        cellColony[i].cellFlag[BOTTOM_RIGHT_POSITION] = 1;
-                    }
-                }
-                if(cellColony[i].getPositionX() == (cellColony[j].getPositionX() + 10))
-                {
-                    if(cellColony[i].getPositionY() == (cellColony[j].getPositionY() + 10))
-                    {
-                        cellColony[i].cellFlag[TOP_LEFT_POSITION] = 1;
-                    }
-                    if(cellColony[i].getPositionY() == (cellColony[j].getPositionY() - 10))
-                    {
-                        cellColony[i].cellFlag[BOTTOM_LEFT_POSITION] = 1;
-                    }
-                }
             }
-
-            /*std::cout << cellColony[i].cellFlag[RIGHT_POSITION] << std::endl;
-            std::cout << cellColony[i].cellFlag[LEFT_POSITION] << std::endl;
-            std::cout << cellColony[i].cellFlag[BOTTOM_POSITION] << std::endl;
-            std::cout << cellColony[i].cellFlag[TOP_POSITION] << std::endl;
-            std::cout << cellColony[i].cellFlag[TOP_LEFT_POSITION] << std::endl;
-            std::cout << cellColony[i].cellFlag[TOP_RIGHT_POSITION] << std::endl;
-            std::cout << cellColony[i].cellFlag[BOTTOM_LEFT_POSITION] << std::endl;
-            std::cout << cellColony[i].cellFlag[BOTTOM_RIGHT_POSITION] << std::endl;*/
         }
-    }
+
 }
 
 void Application::cellLife()
@@ -167,18 +165,30 @@ void Application::cellLife()
     {
         int sum = 0;
         for(int j = 1; j < 9; ++j){
-            //std::cout << "i: " << i << " " << "j: " << j << " " << cellColony[i].cellFlag[j] << std::endl;
+            //std::cout << "cell number: " << i << " " << "flag number : " << j << " " << cellColony[i].cellFlag[j] << std::endl;
             sum += cellColony[i].cellFlag[j];
         }
 
-        std::cout << sum << std::endl;
-        if(sum == 0) continue;
+        std::cout << "sum i:" << i << " " << sum;
+        std::cout << "cell i:" << i << " " << std::boolalpha << cellColony[i].isAlive << std::endl;
 
 
-        if(sum < 2 || sum > 3)
+        if(sum < 2 || sum > 3){
+            cellColony[i].isAlive = false;
             cellColony[i].deadCell();
-        else if(sum == 3 || sum == 3)
+        }
+        if(sum == 3 || sum == 2){
+
+            if(!cellColony[i].isAlive)
+                cellColony[i].liveCell();
+
             cellColony[i].liveCell();
+        }
+
+        for(int j = 1; j < 9; ++j){
+            cellColony[i].cellFlag[j] = 0;
+        }
+
     }
 }
 

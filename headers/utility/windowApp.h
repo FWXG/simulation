@@ -10,13 +10,13 @@ private:
 
     enum directionFlag
     {
-        TOP_POSITION,
-        BOTTOM_POSITION,
-        RIGHT_POSITION,
+        RIGHT_POSITION = 1,
         LEFT_POSITION,
+        BOTTOM_POSITION,
+        TOP_POSITION,
         TOP_RIGHT_POSITION,
-        TOP_LEFT_POSITION,
         BOTTOM_RIGHT_POSITION,
+        TOP_LEFT_POSITION,
         BOTTOM_LEFT_POSITION
     };
 
