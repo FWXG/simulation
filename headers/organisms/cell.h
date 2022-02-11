@@ -19,6 +19,9 @@ public:
     static const int cellRadius = 5;
 
     void setPosition(sf::Vector2f cellPosition);
+    void setColor();
+
+    bool getStatus();
 
     int getPositionX();
     int getPositionY();

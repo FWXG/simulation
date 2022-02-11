@@ -17,11 +17,12 @@ private:
     sf::Mouse mouse;
     sf::RenderWindow window;
 
-    std::vector<Cell> cellColony;
+    Cell **cellColony;
 
     void handleEvents();
     void drawGrid();
     void createPoleOfCells();
+    void rebirthOfCell();
 
 public:
 

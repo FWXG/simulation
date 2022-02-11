@@ -29,7 +29,7 @@ void Application::handleEvents()
         }
         if(event.type == sf::Event::MouseButtonPressed && sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
-
+            rebirthOfCell();
         }
         if(event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
         {
@@ -48,7 +48,6 @@ void Application::handleEvents()
         {
             isGamePause = true;
         }
-
     }
 }
 
@@ -61,43 +60,73 @@ void Application::createWindow()
     {
 
             window.clear(window_color);
-            //createArrayOfCells(); // put cells from mouse
             handleEvents();
+            //std::cout << "x: " << mouse.getPosition().x << " y : " << mouse.getPosition().y << std::endl;
 
-            for (unsigned i = 0; i < gridRows; i++)
+            for(unsigned i = 0; i < gridRows; ++i)
             {
-                for (unsigned j = 0; j < gridCols; j++)
+                for(unsigned j = 0; j < gridCols; ++j)
                 {
-                    window.draw(cellColony[i].getShape());
+                    window.draw(cellColony[i][j].getShape());
                 }
             }
-
-            std::cout << cellColony.size();
-
-            std::cout << "x: " << mouse.getPosition().x << " y : " << mouse.getPosition().y << std::endl;
 
             drawGrid();
 
             window.display();
     }
 
+    //Delete memory
+    for(int i = 0; i < gridRows; ++i)
+        delete[] cellColony[i];
+
+    delete[] cellColony;
+    //////////////////////////////////////
 }
 
 void Application::createPoleOfCells()
 {
     sf::Vector2f cellposition(0, 0);
     Cell oneCell(cellposition);
-    for (unsigned i = 0; i < gridRows; i++) 
+
+    //Dynamic memory
+    cellColony = new Cell*[gridRows];
+    for(int i = 0; i < gridRows; ++i)
+        cellColony[i] = new Cell[gridCols];
+    ////////////////////////////////////
+
+    for (unsigned i = 0; i < gridRows; i++)
     {
         for (unsigned j = 0; j < gridCols; j++)
         {
-            cellColony.push_back(oneCell);
+            cellColony[i][j] = oneCell;
             cellposition.x += (oneCell.cellRadius * 2);
+            oneCell.setPosition(cellposition);
         }
         cellposition.y += (oneCell.cellRadius * 2);
+        cellposition.x = 0;
+        //std::cout << cellposition.y << std::endl;
     }
 }
 
+void Application::rebirthOfCell()
+{
+    int aproxMouseX = mouse.getPosition().x - (mouse.getPosition().x % 10);
+    int aproxMouseY = mouse.getPosition().y - (mouse.getPosition().y % 10);
+
+    for(unsigned i = 0; i < gridRows; ++i)
+    {
+        for(unsigned j = 0; j < gridCols; ++j)
+        {
+            if((aproxMouseX == cellColony[i][j].getPositionX()) && (aproxMouseY == cellColony[i][j].getPositionY()))
+            {
+                cellColony[i][j].isAlive = true;
+                cellColony[i][j].setColor();
+                window.draw(cellColony[i][j].getShape());
+            }
+        }
+    }
+}
 
 void Application::drawGrid()
 {
