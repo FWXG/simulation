@@ -4,6 +4,8 @@
 #include "SFML/Window.hpp"
 #include <random>
 #include <iostream>
+#include <thread>
+#include <chrono>
 
 Application::Application() : window(sf::VideoMode(800, 600, 32), "Live Simulation")
 {
@@ -67,8 +69,10 @@ void Application::createWindow()
             //std::cout << "x: " << mouse.getPosition().x << " y : " << mouse.getPosition().y << std::endl;
 
             for(unsigned i = 0; i < gridRows; ++i)
-            for(unsigned j = 0; j < gridCols; ++j)
+            for(unsigned j = 0; j < gridCols; ++j){
                 window.draw(cellColony[i][j].getShape());
+                //std::this_thread::sleep_for(std::chrono::milliseconds(500));
+            }
 
             drawGrid();
 
@@ -130,8 +134,8 @@ void Application::rebirthOfCell()
 void Application::mainCellCycle()
 {
     int aroundCellAreaStatus;
-    for(unsigned i = 2; i < gridRows; ++i)
-    for(unsigned j = 2; j < gridCols; ++j)
+    for(unsigned i = 2; i < gridRows - 2; ++i)
+    for(unsigned j = 2; j < gridCols - 2; ++j)
     {
         aroundCellAreaStatus = cellColony[i-1][j-1].getStatus() + cellColony[i][j-1].getStatus() +
         cellColony[i+1][j-1].getStatus() + cellColony[i-1][j].getStatus() +
@@ -143,18 +147,20 @@ void Application::mainCellCycle()
             if(aroundCellAreaStatus < 2 || aroundCellAreaStatus > 3){
                 cellColony[i][j].isAlive = false;
                 cellColony[i][j].setDeadColor();
+            }else if(aroundCellAreaStatus == 2 || aroundCellAreaStatus == 3)
+            {
+                cellColony[i][j].isAlive = true;
+                cellColony[i][j].setLiveColor();
             }
-            else cellColony[i][j].isAlive = true;
+
         }
-        else
+        else if(!cellColony[i][j].isAlive)
         {
              if(aroundCellAreaStatus == 3){
                 cellColony[i][j].isAlive = true;
                 cellColony[i][j].setLiveColor();
              }
         }
-        //std::cout << cellColony[i][j].getStatus();
-
     }
 }
 
