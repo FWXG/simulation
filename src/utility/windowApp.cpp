@@ -5,8 +5,7 @@
 #include <random>
 #include <iostream>
 
-Application::Application() : window(sf::VideoMode(sf::VideoMode::getDesktopMode().width,
-                                                   sf::VideoMode::getDesktopMode().height, 32), "Live Simulation", sf::Style::Fullscreen)
+Application::Application() : window(sf::VideoMode(800, 600, 32), "Live Simulation")
 {
 
 }
@@ -29,7 +28,8 @@ void Application::handleEvents()
         }
         if(event.type == sf::Event::MouseButtonPressed && sf::Mouse::isButtonPressed(sf::Mouse::Left))
         {
-            rebirthOfCell();
+            if(isGamePause)
+                rebirthOfCell();
         }
         if(event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
         {
@@ -61,15 +61,14 @@ void Application::createWindow()
 
             window.clear(window_color);
             handleEvents();
+
+            if(!isGamePause)
+                mainCellCycle();
             //std::cout << "x: " << mouse.getPosition().x << " y : " << mouse.getPosition().y << std::endl;
 
             for(unsigned i = 0; i < gridRows; ++i)
-            {
-                for(unsigned j = 0; j < gridCols; ++j)
-                {
-                    window.draw(cellColony[i][j].getShape());
-                }
-            }
+            for(unsigned j = 0; j < gridCols; ++j)
+                window.draw(cellColony[i][j].getShape());
 
             drawGrid();
 
@@ -86,7 +85,7 @@ void Application::createWindow()
 
 void Application::createPoleOfCells()
 {
-    sf::Vector2f cellposition(0, 0);
+    sf::Vector2f cellposition(10, 10);
     Cell oneCell(cellposition);
 
     //Dynamic memory
@@ -95,9 +94,9 @@ void Application::createPoleOfCells()
         cellColony[i] = new Cell[gridCols];
     ////////////////////////////////////
 
-    for (unsigned i = 0; i < gridRows; i++)
+    for (unsigned i = 0; i < gridRows - 2; i++)
     {
-        for (unsigned j = 0; j < gridCols; j++)
+        for (unsigned j = 0; j < gridCols - 2; j++)
         {
             cellColony[i][j] = oneCell;
             cellposition.x += (oneCell.cellRadius * 2);
@@ -105,7 +104,6 @@ void Application::createPoleOfCells()
         }
         cellposition.y += (oneCell.cellRadius * 2);
         cellposition.x = 0;
-        //std::cout << cellposition.y << std::endl;
     }
 }
 
@@ -120,11 +118,43 @@ void Application::rebirthOfCell()
         {
             if((aproxMouseX == cellColony[i][j].getPositionX()) && (aproxMouseY == cellColony[i][j].getPositionY()))
             {
-                cellColony[i][j].isAlive = true;
-                cellColony[i][j].setColor();
+                cellColony[i][j].setStatus(true);
+                cellColony[i][j].setLiveColor();
+                std::cout << cellColony[i][j].getStatus() << std::endl;
                 window.draw(cellColony[i][j].getShape());
             }
         }
+    }
+}
+
+void Application::mainCellCycle()
+{
+    int aroundCellAreaStatus;
+    for(unsigned i = 2; i < gridRows; ++i)
+    for(unsigned j = 2; j < gridCols; ++j)
+    {
+        aroundCellAreaStatus = cellColony[i-1][j-1].getStatus() + cellColony[i][j-1].getStatus() +
+        cellColony[i+1][j-1].getStatus() + cellColony[i-1][j].getStatus() +
+        cellColony[i+1][j].getStatus() + cellColony[i-1][j+1].getStatus() +
+        cellColony[i][j+1].getStatus() + cellColony[i+1][j+1].getStatus();
+
+        if(cellColony[i][j].isAlive)
+        {
+            if(aroundCellAreaStatus < 2 || aroundCellAreaStatus > 3){
+                cellColony[i][j].isAlive = false;
+                cellColony[i][j].setDeadColor();
+            }
+            else cellColony[i][j].isAlive = true;
+        }
+        else
+        {
+             if(aroundCellAreaStatus == 3){
+                cellColony[i][j].isAlive = true;
+                cellColony[i][j].setLiveColor();
+             }
+        }
+        //std::cout << cellColony[i][j].getStatus();
+
     }
 }
 

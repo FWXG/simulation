@@ -25,9 +25,19 @@ void Cell::setPosition(sf::Vector2f cellPosition)
     this->position = cellPosition;
 }
 
-void Cell::setColor()
+void Cell::setLiveColor()
 {
     (this->form).setFillColor(sf::Color::Green);
+}
+
+void Cell::setDeadColor()
+{
+    (this->form).setFillColor(sf::Color::Black);
+}
+
+void Cell::setStatus(bool status)
+{
+    this->isAlive = status;
 }
 
 sf::CircleShape Cell::getShape()
@@ -40,7 +50,7 @@ int Cell::getPositionX()
     return this->position.x;
 }
 
-bool Cell::getStatus()
+int Cell::getStatus()
 {
     return this->isAlive;
 }
