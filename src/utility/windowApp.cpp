@@ -66,7 +66,7 @@ void Application::createWindow()
 
             if(!isGamePause)
                 mainCellCycle();
-            //std::cout << "x: " << mouse.getPosition().x << " y : " << mouse.getPosition().y << std::endl;
+            std::cout << "x: " << mouse.getPosition().x << " y : " << mouse.getPosition().y << std::endl;
 
             for(unsigned i = 0; i < gridRows; ++i)
             for(unsigned j = 0; j < gridCols; ++j){
@@ -113,7 +113,7 @@ void Application::createPoleOfCells()
 
 void Application::rebirthOfCell()
 {
-    int aproxMouseX = mouse.getPosition().x - (mouse.getPosition().x % 10);
+    int aproxMouseX = mouse.getPosition().x  - (mouse.getPosition().x % 10);
     int aproxMouseY = mouse.getPosition().y - (mouse.getPosition().y % 10);
 
     for(unsigned i = 0; i < gridRows; ++i)
@@ -124,7 +124,6 @@ void Application::rebirthOfCell()
             {
                 cellColony[i][j].setStatus(true);
                 cellColony[i][j].setLiveColor();
-                std::cout << cellColony[i][j].getStatus() << std::endl;
                 window.draw(cellColony[i][j].getShape());
             }
         }
@@ -147,12 +146,9 @@ void Application::mainCellCycle()
             if(aroundCellAreaStatus < 2 || aroundCellAreaStatus > 3){
                 cellColony[i][j].isAlive = false;
                 cellColony[i][j].setDeadColor();
-            }else if(aroundCellAreaStatus == 2 || aroundCellAreaStatus == 3)
-            {
-                cellColony[i][j].isAlive = true;
-                cellColony[i][j].setLiveColor();
             }
-
+            else
+                cellColony[i][j].isAlive = true;
         }
         else if(!cellColony[i][j].isAlive)
         {
