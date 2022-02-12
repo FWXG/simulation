@@ -35,11 +35,6 @@ void Cell::setDeadColor()
     (this->form).setFillColor(sf::Color::Black);
 }
 
-void Cell::setStatus(bool status)
-{
-    this->isAlive = status;
-}
-
 sf::CircleShape Cell::getShape()
 {
     return this->form;

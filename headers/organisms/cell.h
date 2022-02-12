@@ -21,7 +21,6 @@ public:
     void setPosition(sf::Vector2f cellPosition);
     void setLiveColor();
     void setDeadColor();
-    void setStatus(bool status);
 
     int getStatus();
 

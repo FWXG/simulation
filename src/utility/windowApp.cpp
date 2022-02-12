@@ -4,10 +4,9 @@
 #include "SFML/Window.hpp"
 #include <random>
 #include <iostream>
-#include <thread>
-#include <chrono>
 
-Application::Application() : window(sf::VideoMode(800, 600, 32), "Live Simulation")
+Application::Application() : window(sf::VideoMode(sf::VideoMode::getDesktopMode().width,
+    sf::VideoMode::getDesktopMode().height, 32), "Live Simulation", sf::Style::Fullscreen)
 {
 
 }
@@ -66,12 +65,11 @@ void Application::createWindow()
 
             if(!isGamePause)
                 mainCellCycle();
-            std::cout << "x: " << mouse.getPosition().x << " y : " << mouse.getPosition().y << std::endl;
+            //std::cout << "x: " << mouse.getPosition().x << " y : " << mouse.getPosition().y << std::endl;
 
             for(unsigned i = 0; i < gridRows; ++i)
             for(unsigned j = 0; j < gridCols; ++j){
                 window.draw(cellColony[i][j].getShape());
-                //std::this_thread::sleep_for(std::chrono::milliseconds(500));
             }
 
             drawGrid();
@@ -80,7 +78,7 @@ void Application::createWindow()
     }
 
     //Delete memory
-    for(int i = 0; i < gridRows; ++i)
+    for(unsigned i = 0; i < gridRows; ++i)
         delete[] cellColony[i];
 
     delete[] cellColony;
@@ -94,13 +92,13 @@ void Application::createPoleOfCells()
 
     //Dynamic memory
     cellColony = new Cell*[gridRows];
-    for(int i = 0; i < gridRows; ++i)
+    for(unsigned i = 0; i < gridRows; ++i)
         cellColony[i] = new Cell[gridCols];
     ////////////////////////////////////
 
-    for (unsigned i = 0; i < gridRows - 2; i++)
+    for (unsigned i = 0; i < gridRows; i++)
     {
-        for (unsigned j = 0; j < gridCols - 2; j++)
+        for (unsigned j = 0; j < gridCols; j++)
         {
             cellColony[i][j] = oneCell;
             cellposition.x += (oneCell.cellRadius * 2);
@@ -122,7 +120,7 @@ void Application::rebirthOfCell()
         {
             if((aproxMouseX == cellColony[i][j].getPositionX()) && (aproxMouseY == cellColony[i][j].getPositionY()))
             {
-                cellColony[i][j].setStatus(true);
+                cellColony[i][j].isAlive = true;
                 cellColony[i][j].setLiveColor();
                 window.draw(cellColony[i][j].getShape());
             }
@@ -147,8 +145,6 @@ void Application::mainCellCycle()
                 cellColony[i][j].isAlive = false;
                 cellColony[i][j].setDeadColor();
             }
-            else
-                cellColony[i][j].isAlive = true;
         }
         else if(!cellColony[i][j].isAlive)
         {
@@ -164,7 +160,7 @@ void Application::drawGrid()
 {
         if(isGridOpen)
         {
-             int numLines = gridCols + gridRows - 2; //Minus two start pixels
+            unsigned numLines = gridCols + gridRows - 2; //Minus two start pixels
             sf::VertexArray grid(sf::Lines, 2*numLines); // Make vertex array of line primitives
             window.setView(window.getDefaultView());
             auto size = window.getView().getSize();// Get size of window

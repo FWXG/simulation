@@ -11,13 +11,13 @@ private:
     bool isGridOpen = false;
     bool isGamePause = true;
 
-    const unsigned gridRows = 600 / (Cell::cellRadius * 2); // Size of screen divided by 10
-    const unsigned gridCols = 800 / (Cell::cellRadius * 2);
+    const unsigned gridRows = sf::VideoMode::getDesktopMode().height / (Cell::cellRadius * 2); // Size of screen divided by 10
+    const unsigned gridCols = sf::VideoMode::getDesktopMode().width / (Cell::cellRadius * 2);
 
     sf::Mouse mouse;
     sf::RenderWindow window;
 
-    Cell **cellColony;
+    Cell **cellColony = nullptr;
 
     void handleEvents();
     void drawGrid();
